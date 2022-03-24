@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SignupForm;
 
 class SiteController extends Controller
 {
@@ -61,7 +62,34 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+       // \app\helpers\DebugHelper::dd(Yii::$app->user);
+       // \app\helpers\DebugHelper::dd($hui);
+  
         return $this->render('index');
+    }
+
+
+
+    /**
+     * Форма регистрации.
+     *
+     * @return mixed
+     */
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            //\app\helpers\DebugHelper::dd( $model);
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
     }
 
     /**
