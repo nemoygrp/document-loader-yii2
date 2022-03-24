@@ -21,11 +21,19 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'denyCallback' => function ($rule, $action) {
+                    throw new \Exception('У вас нет доступа к этой странице');
+                },
+                'only' => ['login', 'logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
+                        'actions' => ['login', 'signup'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -80,7 +88,6 @@ class SiteController extends Controller
         $model = new SignupForm();
         
         if ($model->load(Yii::$app->request->post())) {
-            //\app\helpers\DebugHelper::dd( $model);
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();

@@ -3,6 +3,7 @@ namespace app\models;
 
 use yii\base\Model;
 use app\models\User;
+use Yii;
 
 class SignupForm extends Model
 {
@@ -37,7 +38,7 @@ class SignupForm extends Model
      *
      * @return User|null the saved model or null if saving fails
      */
-    public function signup()
+    public function signup(): User
     {
         if (!$this->validate()) {
             return null;
@@ -48,8 +49,17 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-       
+        $user->save(false);
 
-        return $user->save() ? $user : null;
+        $auth = Yii::$app->authManager;
+        $citizenRole = $auth->getRole('citizen');
+        $auth->assign($citizenRole, $user->getId());
+
+        return $user;
+    }
+
+    private function assignRole(): void
+    {
+
     }
 }

@@ -22,40 +22,16 @@ class User extends ActiveRecord implements IdentityInterface
         return 'users';
     }
 
-    public static function roles()
-    {
-        return [
-            self::ROLE_USER => Yii::t('app', 'User'),
-            self::ROLE_ADMIN => Yii::t('app', 'Admin'),
-            self::ROLE_MANAGER => Yii::t('app', 'Manager'),
-        ];
-    }
-
-    /**
-     * Название роли
-     * @param int $id
-     * @return mixed|null
-     */
-    public function getRoleName(int $id)
-    {
-        $list = self::roles();
-        return $list[$id] ?? null;
-    }
-
-    public function isAdmin()
+    public function isElder()
     {
         return ($this->role == self::ROLE_ADMIN);
     }
 
-    public function isManager()
+    public function isCitizen()
     {
-        return ($this->role == self::ROLE_MANAGER);
+        return \Yii::$app->user->can('uploadDoc');
     }
 
-    public function isUser()
-    {
-        return ($this->role == self::ROLE_USER);
-    }
     /**
      * {@inheritdoc}
      */
