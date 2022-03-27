@@ -3,9 +3,22 @@ main > .container {
 }
 body {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+    background-image: url('/img/back.png');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+a {
+    color: black;
+    font-weight: bold;
+}
+a:hover {
+    color: black;
+    font-weight: bold;
+}
+.back-transparent {
+    background-color: transparent !important;
 }
 .footer {
-    background-color: #f5f5f5;
     font-size: .9em;
     height: 60px;
 }
@@ -85,7 +98,7 @@ a.desc:after {
     outline: none;
 }
 .breadcrumb {
-     background-color:  white !important;
+     background-color:  transparent !important;
 }
 
 .breadcrumb > li > a {
@@ -100,6 +113,7 @@ a.desc:after {
 a.nav-link {
     margin-top: 0.1rem;
     margin-right: 1rem;
+    font-weight: 400;
 }
 
 .custom-control-input:checked ~ .custom-control-label::before {
@@ -113,4 +127,49 @@ a.nav-link {
 }
 .invalid-feedback {
     margin-top: 0px;
+}
+.block-upload-form {
+    background-image: url('/img/form-back.png');
+    color: white;
+    min-height: 400px;
+    padding-top: 5em;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.fix-height {
+    height: 100% !important;
+}
+.upload-form-fixsize {
+    padding: 2em;
+}
+.list-header-block {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    color: #212529;
+    font-weight: bold;
+}
+.list_item_block {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+.bg-smooth-1 {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+.bg-smooth-2 {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.list-control-panel > .pagination {
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 40%;
+}
+.list-control-panel {
+    margin-top: 2em;
+    display: flex;
+    justify-content: space-between;
 }

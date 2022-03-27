@@ -8,14 +8,10 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\UploadForm;
-use app\models\SignupForm;
-use app\components\DataProviderService;
+use app\components\DocumentService;
 use app\models\Document;
-use yii\web\UploadedFile;
 
-class SiteController extends Controller
+class StatisticController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -74,67 +70,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index', [
-            'user' => Yii::$app->user->getIdentity() ,
-            'dataProvider' => DataProviderService::getProvider('access_docs'),
+        return $this->render('statistic', [
+            'service' => DocumentService::init()
         ]);
     }
 
-
-    /**
-     * Форма регистрации.
-     *
-     * @return mixed
-     */
-    public function actionSignup()
-    {
-        $form = new SignupForm();
-        
-        if ($form->load(Yii::$app->request->post())) {
-            if ($user = $form->handle()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $form,
-        ]);
-    }
-
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $form = new LoginForm();
-        if ($form->load(Yii::$app->request->post()) && $form->login()) {
-            return $this->goBack();
-        }
-
-        $form->password = '';
-        return $this->render('login', [
-            'model' => $form,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
+   
 }
 

@@ -18,17 +18,17 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Такое логин уже занят.'],
+            ['username', 'required', 'message' => 'Обязательное поле'],
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Такой логин уже занят'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
-            ['email', 'required'],
+            ['email', 'required', 'message' => 'Обязательное поле'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Такая почта уже занята.'],
 
-            ['password', 'required'],
+            ['password', 'required', 'message' => 'Обязательное поле'],
             ['password', 'string', 'min' => 6],
         ];
     }
@@ -38,7 +38,7 @@ class SignupForm extends Model
      *
      * @return User|null the saved model or null if saving fails
      */
-    public function signup(): User
+    public function handle(): ?User
     {
         if (!$this->validate()) {
             return null;
@@ -56,10 +56,5 @@ class SignupForm extends Model
         $auth->assign($citizenRole, $user->getId());
 
         return $user;
-    }
-
-    private function assignRole(): void
-    {
-
     }
 }
