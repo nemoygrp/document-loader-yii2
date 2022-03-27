@@ -12,10 +12,11 @@ use app\models\LoginForm;
 use app\models\UploadForm;
 use app\models\SignupForm;
 use app\components\DataProviderService;
-use app\models\Document;
+use app\components\UserService;
+use app\models\User;
 use yii\web\UploadedFile;
 
-class SiteController extends Controller
+class UserController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -74,67 +75,51 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index', [
-            'user' => Yii::$app->user->getIdentity() ,
-            'dataProvider' => DataProviderService::getProvider('access_docs'),
-        ]);
-    }
-
-
-    /**
-     * Форма регистрации.
-     *
-     * @return mixed
-     */
-    public function actionSignup()
-    {
-        $form = new SignupForm();
-        
-        if ($form->load(Yii::$app->request->post())) {
-            if ($user = $form->handle()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $form,
+        return $this->render('users', [
+            'dataProvider' => DataProviderService::getProvider('config_users'),
         ]);
     }
 
     /**
-     * Login action.
-     *
-     * @return Response|string
+     * Повышение пользователя до админа
+     * 
+     * @param integer $id
+     * @return void
      */
-    public function actionLogin()
+    public function actionRaise(int $id)
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        $auth = Yii::$app->authManager;
+        $auth->revokeAll($id);
+        $adminRole = $auth->getRole(UserService::USER_ROLE_ADMIN);
+        $auth->assign($adminRole, $id);
 
-        $form = new LoginForm();
-        if ($form->load(Yii::$app->request->post()) && $form->login()) {
-            return $this->goBack();
-        }
+        return $this->redirect('/user');
+    }
+   
 
-        $form->password = '';
-        return $this->render('login', [
-            'model' => $form,
-        ]);
+    public function actionFlush(int $id)
+    {
+        $this->findUserModel($id)->delete();
+
+        return $this->redirect('/user');
     }
 
     /**
-     * Logout action.
-     *
-     * @return Response
+     * Поиск модели запроса.
+     * 
+     * @param  int $requestId
+     * @return PartnerRequest $request
+     * @throws NotFoundException
      */
-    public function actionLogout()
+    private function findUserModel(int $userId)
     {
-        Yii::$app->user->logout();
+        $request = User::findOne($userId);
 
-        return $this->goHome();
+        if (empty($request)) {
+            return abort(404);
+        }
+
+        return $request;
     }
 }
 

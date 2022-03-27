@@ -13,6 +13,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
         '@img' => "/img",
+        '@storage' => dirname(__DIR__). "/storage",
     ],
     /*'as access' => [
         'class' => 'yii\filters\AccessControl',
@@ -56,12 +57,26 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'user/raise/<id:\d+>' => 'user/raise',
+                'user/flush/<id:\d+>' => 'user/flush',
             ],
+        ],
+        'debugger' => [
+            'class' => 'app\helpers\DebugHelper',
+        ],
+        'formatter' => [
+            'class'         => 'yii\i18n\Formatter',
+            'timeZone'      => 'Europe/Moscow',
+            'datetimeFormat'=> 'php:Y-m-d H:i:s',
+            'dateFormat'    => 'php:Y-m-d',
+            'timeFormat'    => 'php:H:i:s',
         ],
         
     ],

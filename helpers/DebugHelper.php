@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\VarDumper;
 
 /**
- * ContactForm is the model behind the contact form.
+ * Yii::$app->debugger->dd(); - вызов
  */
 class DebugHelper 
 {

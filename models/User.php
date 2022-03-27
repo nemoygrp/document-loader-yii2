@@ -12,6 +12,11 @@ use app\helpers\DateHelper;
 
 class User extends ActiveRecord implements IdentityInterface
 {
+    public function documents()
+    {
+       return $this->hasMany(Document::class, ['user_id' => 'id']);
+    }
+
     /**
      * Undocumented function
      *
@@ -22,40 +27,6 @@ class User extends ActiveRecord implements IdentityInterface
         return 'users';
     }
 
-    public static function roles()
-    {
-        return [
-            self::ROLE_USER => Yii::t('app', 'User'),
-            self::ROLE_ADMIN => Yii::t('app', 'Admin'),
-            self::ROLE_MANAGER => Yii::t('app', 'Manager'),
-        ];
-    }
-
-    /**
-     * Название роли
-     * @param int $id
-     * @return mixed|null
-     */
-    public function getRoleName(int $id)
-    {
-        $list = self::roles();
-        return $list[$id] ?? null;
-    }
-
-    public function isAdmin()
-    {
-        return ($this->role == self::ROLE_ADMIN);
-    }
-
-    public function isManager()
-    {
-        return ($this->role == self::ROLE_MANAGER);
-    }
-
-    public function isUser()
-    {
-        return ($this->role == self::ROLE_USER);
-    }
     /**
      * {@inheritdoc}
      */
@@ -72,9 +43,22 @@ class User extends ActiveRecord implements IdentityInterface
         return [
                 [
                     'class' => TimestampBehavior::class,
-                    'value' => DateHelper::getFormattedDate('now','Y-m-d H:i:s'),
+                    'value' => Yii::$app->formatter->asDate('now'),
                 ],
             ];
+    }
+
+    public function beforeDelete() {
+
+        $auth = Yii::$app->authManager;
+        $auth->revokeAll($this->id);
+
+        foreach ($this->documents()->all() as $item) {
+
+            $item->delete();
+        }
+
+        return parent::beforeDelete();
     }
 
     /**
@@ -165,4 +149,16 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $default
+     * @return string
+     */
+    public function printDocumentsCount(string $default = '0'): string 
+    {
+        return (string) $this->documents()->count();
+    }
+
 }

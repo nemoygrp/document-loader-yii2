@@ -15,7 +15,7 @@ use app\components\DataProviderService;
 use app\models\Document;
 use yii\web\UploadedFile;
 
-class SiteController extends Controller
+class DocumentController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -74,67 +74,37 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index', [
-            'user' => Yii::$app->user->getIdentity() ,
-            'dataProvider' => DataProviderService::getProvider('access_docs'),
-        ]);
-    }
+        $form = new UploadForm();
 
-
-    /**
-     * Форма регистрации.
-     *
-     * @return mixed
-     */
-    public function actionSignup()
-    {
-        $form = new SignupForm();
-        
-        if ($form->load(Yii::$app->request->post())) {
-            if ($user = $form->handle()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
+        if (Yii::$app->request->isPost) {
+            $form->load(Yii::$app->request->post());
+            $form->document = UploadedFile::getInstance($form, 'document');
+         
+            if ($form->handle()) {
+                return $this->goHome();
             }
         }
 
-        return $this->render('signup', [
+        return $this->render('upload', [
             'model' => $form,
+            'user' => Yii::$app->user->getIdentity(),
+            'dataProvider' => DataProviderService::getProvider('last_update', 4),
         ]);
     }
 
     /**
-     * Login action.
+     * Undocumented function
      *
-     * @return Response|string
+     * @param integer $docId
+     * @return void
      */
-    public function actionLogin()
+    public function actionGetFile()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        $model = Document::findOne(Yii::$app->request->post()['docId']);
+        $storagePath = Yii::getAlias('@storage');
 
-        $form = new LoginForm();
-        if ($form->load(Yii::$app->request->post()) && $form->login()) {
-            return $this->goBack();
-        }
-
-        $form->password = '';
-        return $this->render('login', [
-            'model' => $form,
-        ]);
+        return Yii::$app->response->sendFile($storagePath.'/' . $model->getCryptFilename(), $model->getFullFilename());
     }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
+   
 }
 

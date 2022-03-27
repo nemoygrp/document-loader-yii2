@@ -1,11 +1,16 @@
 <?php
 
 /** @var yii\web\View $this */
-
+use yii\helpers\Html;
+use yii\bootstrap4\ActiveForm;
 use yii\widgets\ListView;
 
+
+$this->title = 'Управление пользователями';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-    <div class="mt-5 pl-4 mb-5"> Доступные файлы</div>
+
+
 <?= 
 ListView::widget([
     'dataProvider' => $dataProvider,
@@ -15,14 +20,17 @@ ListView::widget([
         'id' => 'last-upload-list',
     ],
     'layout' => '<div class="list-header-block bg-smooth-1 row">
-        <div class="col-lg-3">Название</div>
-        <div class="col-lg-3">Имя пользователя</div>
-        <div class="col-lg-3">Дата загрузки</div>
-        <div class="col-lg-2">Объем</div>
+        <div class="col-lg-1">#</div>
+        <div class="col-lg-2">Имя</div>
+        <div class="col-lg-3">Email</div>
+        <div class="col-lg-2">Зарегистрирован</div>
+        <div class="col-lg-2">Загружено</div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-1"></div>
         <div class="col-lg-1"></div>
     </div>{items}<br>
     <div class="list-control-panel"> {pager}{summary}</div>',
-    'itemView' => 'components/_public_item',
+    'itemView' => 'components/_users_item',
     'pager' => [
         'nextPageLabel' => 'Следующая',
         'prevPageLabel' => 'Предыдущая',
