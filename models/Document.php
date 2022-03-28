@@ -15,12 +15,17 @@ use yii\db\ActiveQuery;
 
 class Document extends ActiveRecord
 {
+    /**
+     * @var boolean
+     */
     public $public = false;
+
+    /**
+     * @var boolean
+     */
     public $private = false;
 
     /**
-     * Undocumented function
-     *
      * @return string
      */
     public static function tableName(): string
@@ -67,7 +72,7 @@ class Document extends ActiveRecord
     }
 
     /**
-     * Undocumented function
+     * Получение полного имени документа
      *
      * @return string
      */
@@ -77,7 +82,7 @@ class Document extends ActiveRecord
     }
 
     /**
-     * Undocumented function
+     * Вывод имени пользователя
      *
      * @param string $default
      * @return string
@@ -100,7 +105,7 @@ class Document extends ActiveRecord
     
 
     /**
-     * Undocumented function
+     * Проверка есть ли пользователь
      *
      * @return boolean
      */
@@ -110,7 +115,7 @@ class Document extends ActiveRecord
     }
 
     /**
-     * Undocumented function
+     * Получение пользователя
      *
      * @return User
      */

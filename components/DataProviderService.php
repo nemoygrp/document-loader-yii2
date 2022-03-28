@@ -75,7 +75,7 @@ class DataProviderService
     }
 
     /**
-     * Undocumented function
+     * Формирование дата провайдера
      *
      * @return ActiveQuery
      */

@@ -51,7 +51,7 @@ class DocumentService
     }
 
     /**
-     * Undocumented function
+     * Установка параметров статистики
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class DocumentService
     }
 
     /**
-     * Undocumented function
+     * Установка параметров соотношения
      *
      * @return void
      */
@@ -75,7 +75,7 @@ class DocumentService
     }
     
     /**
-     * Undocumented function
+     * Получение стат данных по кол-ву дней
      *
      * @param integer $days
      * @return void
@@ -98,7 +98,7 @@ class DocumentService
     }
 
     /**
-     * Undocumented function
+     * Получение данных по дням и публичных
      *
      * @param integer $days
      * @return integer
@@ -111,7 +111,7 @@ class DocumentService
     }
 
     /**
-     * Undocumented function
+     * Получение данных по дням и условно публичных
      *
      * @param integer $days
      * @return integer
@@ -125,7 +125,7 @@ class DocumentService
     }
 
     /**
-     * Undocumented function
+     * Получение данных по дням и приватных
      *
      * @param integer $days
      * @return integer

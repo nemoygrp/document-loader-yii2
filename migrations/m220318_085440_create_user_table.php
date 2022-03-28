@@ -17,7 +17,7 @@ class m220318_085440_create_user_table extends Migration
     {
         $this->createTable($this->getMainTableName(), [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
+            'username' => $this->string()->notNull(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
@@ -27,7 +27,7 @@ class m220318_085440_create_user_table extends Migration
             'updated_at' => $this->dateTime(),
         ]);
 
-        $this->createIndex('idx-user-username', $this->getMainTableName(), 'username', true);
+        $this->createIndex('idx-user-username', $this->getMainTableName(), 'username', false);
         $this->createIndex('idx-user-email', $this->getMainTableName(), 'email', true);
     }
     public function down()

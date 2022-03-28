@@ -12,8 +12,7 @@ use app\models\LoginForm;
 use app\models\UploadForm;
 use app\models\SignupForm;
 use app\components\DataProviderService;
-use app\models\Document;
-use yii\web\UploadedFile;
+
 
 class SiteController extends Controller
 {
@@ -84,7 +83,7 @@ class SiteController extends Controller
     /**
      * Форма регистрации.
      *
-     * @return mixed
+     * @return Response|string
      */
     public function actionSignup()
     {
@@ -104,7 +103,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
+     * Форма авторизации
      *
      * @return Response|string
      */
@@ -126,7 +125,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logout action.
+     * Форма деавторизации
      *
      * @return Response
      */

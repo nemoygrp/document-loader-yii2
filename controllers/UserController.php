@@ -84,7 +84,7 @@ class UserController extends Controller
      * Повышение пользователя до админа
      * 
      * @param integer $id
-     * @return void
+     * @return Response|string
      */
     public function actionRaise(int $id)
     {
@@ -97,6 +97,12 @@ class UserController extends Controller
     }
    
 
+    /**
+     * Удаление пользователя
+     *
+     * @param integer $id
+     * @return Response|string
+     */
     public function actionFlush(int $id)
     {
         $this->findUserModel($id)->delete();
@@ -105,13 +111,13 @@ class UserController extends Controller
     }
 
     /**
-     * Поиск модели запроса.
+     * Поиск модели пользователя
      * 
-     * @param  int $requestId
-     * @return PartnerRequest $request
+     * @param  int $userId
+     * @return User $user
      * @throws NotFoundException
      */
-    private function findUserModel(int $userId)
+    private function findUserModel(int $userId): User
     {
         $request = User::findOne($userId);
 
