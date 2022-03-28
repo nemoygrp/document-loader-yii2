@@ -64,6 +64,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ''                    => 'site/index',
                 'user/raise/<id:\d+>' => 'user/raise',
                 'user/flush/<id:\d+>' => 'user/flush',
             ],
