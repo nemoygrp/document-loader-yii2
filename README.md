@@ -1,6 +1,6 @@
 <p align="center">
     <a href="/" target="_blank">
-        <img src="/img/logo.jpg" height="100px">
+        <img src="/web/img/logo.jpg" height="100px">
     </a>
     <h1 align="center">DocLoader</h1>
     <br>
@@ -8,6 +8,17 @@
 
 Загрузчик файлов о котором все мечтали =)
 
-php yii migrate --migrationPath=@yii/rbac/migrations/
+Установка
 
+php yii migrate --migrationPath=@yii/rbac/migrations/
 php yii rbac/init
+
+Для настройки ролей.
+
+
+Пользователь админ:
+
+admin
+123456
+
+Просто пользователь любой зарегистрированный.

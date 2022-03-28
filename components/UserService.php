@@ -14,8 +14,6 @@ class UserService
      */
     const USER_ROLE_ADMIN = 'elder';
 
-
-
     /**
      * Возвращает модель пользователя
      * 
@@ -30,16 +28,31 @@ class UserService
         return new User;
     }
 
+    /**
+     * Я гость?
+     *
+     * @return boolean
+     */
     public static function isGuest(): bool
     {
         return (bool) Yii::$app->user->isGuest;
     }
 
+    /**
+     * Я старец?
+     *
+     * @return boolean
+     */
     public static function isElder(): bool
     {
         return (bool) Yii::$app->user->can('elder');
     }
 
+    /**
+     * Я гражданин?
+     *
+     * @return boolean
+     */
     public static function isCitizen(): bool
     {
         return (bool) Yii::$app->user->can('citizen');
@@ -56,7 +69,7 @@ class UserService
     }
 
     /**
-     * Undocumented function
+     * Возвращает роль по айди
      *
      * @param integer $userId
      * @param string $default
@@ -66,6 +79,4 @@ class UserService
     {
         return Yii::$app->authManager->checkAccess($userId, static::USER_ROLE_ADMIN);
     }
-
-    
 }

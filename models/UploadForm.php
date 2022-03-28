@@ -43,7 +43,6 @@ class UploadForm extends Model
         $this->signHistory();
     }
 
-
     /**
      * Метод загружающий файл
      *
@@ -55,7 +54,7 @@ class UploadForm extends Model
     }
 
     /**
-     * Метод записывающий данные о 
+     * Метод записывающий данные о файле
      *
      * @return void
      */
