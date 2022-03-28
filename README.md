@@ -8,10 +8,10 @@
 ### Загрузчик файлов о котором все мечтали =)
 
 ### Установка
-
+```sh
 php yii migrate --migrationPath=@yii/rbac/migrations/
 php yii rbac/init
-
+```
 ### Для настройки ролей.
 
 
