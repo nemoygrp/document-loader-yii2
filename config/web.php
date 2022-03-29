@@ -72,14 +72,6 @@ $config = [
         'debugger' => [
             'class' => 'app\helpers\DebugHelper',
         ],
-        'formatter' => [
-            'class'         => 'yii\i18n\Formatter',
-            'timeZone'      => 'Europe/Moscow',
-            'datetimeFormat'=> 'php:Y-m-d H:i:s',
-            'dateFormat'    => 'php:Y-m-d',
-            'timeFormat'    => 'php:H:i:s',
-        ],
-        
     ],
     'params' => $params,
 ];

@@ -41,7 +41,7 @@ class Document extends ActiveRecord
         return [
                 [
                     'class' => TimestampBehavior::class,
-                    'value' => Yii::$app->formatter->asDate('now'),
+                    'value' => Yii::$app->formatter->asDate('now', 'php:Y-m-d H:i:s'),
                 ],
                 'typecast' => [
                         'class' => AttributeTypecastBehavior::class,
